@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import Login from "./Authentication/Login";
+import AllPosts from "./Posts/AllPosts";
+import Post from "./Posts/Post";
+import { useSelector } from "react-redux";
 
 function App() {
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  const userLog = useSelector((state) => state.user.isLoggedIn);
+  console.log(userLog);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      {/* {!userLog ? navigate("/") : navigate("/posts")} */}
+      <Route path="/" element={<Login />} exact type="guest" />
+      <Route path="/posts" element={<AllPosts />} exact type="private" />
+      <Route path="/post" element={<Post />} exact type="private" />
+    </Routes>
   );
 }
 
